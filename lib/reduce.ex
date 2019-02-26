@@ -1,11 +1,6 @@
 defmodule List.Reduce do
-  def foldl(list, base, fun), do: do_foldl(list, fun, base)
-
-  def foldr(list, base, fun), do: do_foldr(list, fun, base)
-
-  defp do_foldl([], _, result), do: result
-  defp do_foldl([h | t], fun, result), do: do_foldl(t, fun, fun.(result, h))
-
-  defp do_foldr([], _, result), do: result
-  defp do_foldr([h | t], fun, result), do: fun.(h, do_foldr(t, fun, result))
+  def foldl([], result, _), do: result
+  def foldl([h | t], result, fun), do: foldl(t, fun.(h, result), fun)
+  def foldr([], result, _), do: result
+  def foldr([h | t], result, fun), do: fun.(h, foldr(t, result, fun))
 end
