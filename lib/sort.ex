@@ -2,7 +2,6 @@ defmodule List.Sort do
   @doc ~s"""
   Sorts any lsit
 
-  ## Examples:
       iex> List.Sort.quicksort([])
       []
 

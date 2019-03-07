@@ -25,8 +25,6 @@ defmodule FizzBuzz.Lame do
 end
 
 defmodule FizzBuzz do
-  @spec fizzbuzz(non_neg_integer()) :: [fizzbuzz]
-        when fizzbuzz: String.t() | non_neg_integer()
   def fizzbuzz(n) when is_integer(n) and n > 0,
     do: Enum.map(1..n, &f(rem(&1, 3), rem(&1, 5), &1))
 
