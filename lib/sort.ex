@@ -13,22 +13,28 @@ defmodule List.Sort do
 
       iex> List.Sort.quicksort([2,1,2, -1.0, 1.0, :a, "asd", 'as', %{a: 2}, [1,2,3]])
       [-1.0, 1, 1.0, 2, 2, :a, %{a: 2}, [1, 2, 3], 'as', "asd"]
+
+      iex> List.Sort.quicksort(500_000..1 |> Enum.to_list) == 1..500_000
   """
   def quicksort([]), do: []
 
-  def quicksort([pivot | t]) do
-    {smaller, larger} = partition(t, pivot)
-    quicksort(smaller) ++ [pivot] ++ quicksort(larger)
+  def quicksort(list) when is_list(list) do
+    pivot = Enum.at(list, :random.uniform(length(list)) - 1)
+    {smaller, equal, larger} = partition(list, pivot)
+    quicksort(smaller) ++ equal ++ quicksort(larger)
   end
 
   defp partition(list, pivot) do
     list
-    |> Enum.reduce({[], []}, fn
-      elem, {smaller, larger} when elem <= pivot ->
-        {[elem | smaller], larger}
+    |> Enum.reduce({[], [], []}, fn
+      elem, {s, e, l} when elem < pivot ->
+        {[elem | s], e, l}
 
-      elem, {smaller, larger} ->
-        {smaller, [elem | larger]}
+      elem, {s, e, l} when elem > pivot ->
+        {s, e, [elem | l]}
+
+      elem, {s, e, l} ->
+        {s, [elem | e], l}
     end)
   end
 end
