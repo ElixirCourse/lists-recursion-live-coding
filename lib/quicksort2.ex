@@ -1,4 +1,4 @@
-defmodule FB do
+defmodule Quicksort do
   def quicksort([]), do: []
 
   def quicksort(list) do
